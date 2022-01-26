@@ -26,7 +26,7 @@
             </li>
             {% if basket %}
                 <li class="dropdown-item">
-                    <a href="{% url 'basket:index' %}" class="basket">
+                    <a href="{% url 'basket:index' %}">
                         <span>
                             {{ basket.0.total_cost|floatformat:0 }} руб
                             ({{ basket.0.total_quantity }} шт)
@@ -55,6 +55,7 @@
             </a>
         </li>
     {% endif %}
+
 
     <li><a href="#"><img src="{% static '/geekshop/img/search.png' %}" alt=""></a></li>
 

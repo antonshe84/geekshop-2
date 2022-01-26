@@ -2,22 +2,37 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
+from django.views.generic import ListView
 
 from basketapp.models import Basket
 from mainapp.models import Product
 from django.contrib.auth.decorators import login_required
 
 
-@login_required
-def basket(request):
-    title = 'корзина'
-    basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+# @login_required
+# def basket(request):
+#     title = 'корзина'
+#     basket_items = Basket.objects.filter(user=request.user).order_by('product__category')
+#
+#     context = {
+#         'title': title,
+#         'basket_items': basket_items,
+#     }
+#     return render(request, 'basketapp/basket.html', context)
 
-    context = {
-        'title': title,
-        'basket_items': basket_items,
-    }
-    return render(request, 'basketapp/basket.html', context)
+
+class BasketListView(ListView):
+    model = Basket
+    template_name = 'basketapp/basket.html'
+    context_object_name = 'basket_items'
+
+    def get_queryset(self):
+        return Basket.objects.filter(user=self.request.user).order_by('product__category')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['title'] = 'GeekShop - Корзина'
+        return context
 
 
 @login_required
