@@ -77,7 +77,7 @@ def user_update(request, pk):
 
         if edit_form.is_valid():
             edit_form.save()
-            return HttpResponseRedirect(reverse('admin_staff:user_update', args=[edit_user.pk]))
+            return HttpResponseRedirect(reverse('admin_staff:users'))
     else:
         edit_form = ShopUserAdminEditForm(instance=edit_user)
 
@@ -130,20 +130,11 @@ class ProductCategoryCreateView(CreateView):
     form_class = ProductCategoryEditForm
 
 
-# @user_passes_test(lambda u: u.is_superuser)
-# def category_create(request):
-#     pass
-
 class ProductCategoryUpdateView(UpdateView):
     model = ProductCategory
     template_name = 'adminapp/category_update.html'
     success_url = reverse_lazy('admin_staff:categories')
     fields = '__all__'
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def category_update(request, pk):
-    pass
 
 
 class ProductCategoryDeleteView(DeleteView):
@@ -158,11 +149,6 @@ class ProductCategoryDeleteView(DeleteView):
         self.object.save()
 
         return HttpResponseRedirect(self.get_success_url())
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def category_delete(request, pk):
-    pass
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -206,19 +192,7 @@ def product_create(request, pk):
 class ProductDetailView(DetailView):
     model = Product
     template_name = 'adminapp/product_read.html'
-
-
-@user_passes_test(lambda u: u.is_superuser)
-def product_read(request, pk):
-    title = 'продукт/подробнее'
-
-    product = get_object_or_404(Product, pk=pk)
-    context = {
-        'title': title,
-        'object': product,
-    }
-
-    return render(request, 'adminapp/product_read.html', context)
+    success_url = reverse_lazy('admin_staff:products')
 
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -231,7 +205,7 @@ def product_update(request, pk):
         edit_form = ProductEditForm(request.POST, request.FILES, instance=edit_product)
         if edit_form.is_valid():
             edit_form.save()
-            return HttpResponseRedirect(reverse('admin_staff:product_update', args=[edit_product.pk]))
+            return HttpResponseRedirect(reverse('admin_staff:products', args=[edit_product.category.pk]))
 
     else:
         edit_form = ProductEditForm(instance=edit_product)
