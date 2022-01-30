@@ -34,7 +34,7 @@ def products(request, pk=None, page=1):
             category = get_object_or_404(ProductCategory, pk=pk)
             products = Product.objects.filter(category__pk=pk).order_by('price')
 
-        paginator = Paginator(products, 6)
+        paginator = Paginator(products, 4)
 
         try:
             products_paginator = paginator.page(page)

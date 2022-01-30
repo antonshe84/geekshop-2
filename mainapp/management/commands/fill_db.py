@@ -17,9 +17,12 @@ class Command(BaseCommand):
         categories = load_from_json('categories')
 
         ProductCategory.objects.all().delete()
+
         for category in categories:
             new_category = ProductCategory(**category)
             new_category.save()
+
+        print(f"Add {len(ProductCategory.objects.all())} categories")
 
         products = load_from_json('products')
 
@@ -32,4 +35,9 @@ class Command(BaseCommand):
             new_product = Product(**product)
             new_product.save()
 
+        print(f"Add {len(Product.objects.all())} products")
+
+
         ShopUser.objects.create_superuser('django', "admin@geekshop.ru", 'geekbrains', age=30)
+        ShopUser.objects.create_user('user', "user@geekshop.ru", 'geekbrains', age=25)
+        print(f"Users created")

@@ -61,13 +61,11 @@
 				<div class="description">
 					<h3 class="big-bold">{{ hot_product.short_desc}}</h3>
 					<h3 class="red">горячее предложение</h3>
+                    <h3 class="description-text">{{ hot_product.description}}</h3>
 					<p class="price"> {{ hot_product.price }} <span>руб</span></p>
 					<a href="{% url 'mainapp:detail' pk=hot_product.pk %}" class="red-button">
 						заказать <i class="fa chevron-right" aria-hidden="true"></i>
 					</a>
-					<div class="description-text">
-                        {{ hot_product.description}}
-					</div>
 				</div>
 			</div>
 
