@@ -95,6 +95,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 #     }
 # }
 
+# http://89.108.79.234/
 
 DATABASES = {
     'default': {
