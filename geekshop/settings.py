@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'geekshop.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'geekshop',
+        'NAME': 'postgres',
         'USER': 'postgres',
         # 'PASSWORD': 'password',
         # 'HOST': 'db.example.com',
