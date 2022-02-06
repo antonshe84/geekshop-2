@@ -43,7 +43,7 @@ class OrderCreate(CreateView):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
                     # form.initial['price'] = basket_items[num].product.price
-                    basket_items.delete()
+                    basket_items[num].delete()
             else:
                 formset = OrderFormSet()
 
@@ -142,7 +142,7 @@ def product_quantity_update_delete(sender, instance, **kwargs):
 
 
 def get_product_price(request, pk):
-    if request.is_ajax():
+    if is_ajax(request):
         product = Product.objects.filter(pk=int(pk)).first()
         if product:
             return JsonResponse({'price': product.price})
